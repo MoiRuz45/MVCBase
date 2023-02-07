@@ -42,9 +42,9 @@ public class EditorialDAO {
 			while(resultado.next()) {
 				int codEditorial = resultado.getInt("codeditorial");
 				String nombre = resultado.getString("nombre");
-				int año = resultado.getInt("año");
+				int anio = resultado.getInt("anio");
 				
-				Editorial ed = new Editorial(codEditorial, nombre,año);
+				Editorial ed = new Editorial(codEditorial, nombre,anio);
 				lista.add(ed);
 			}
 			
@@ -81,7 +81,7 @@ public class EditorialDAO {
 			// Bucle para recorrer todas las filas que devuelve la consulta
 			if (resultado.next()) {
 				String nombre = resultado.getString("nombre");
-				int año = resultado.getInt("año");
+				int año = resultado.getInt("anio");
 				
 				ed = new Editorial(codEditorial, nombre,año);
 			}
@@ -110,11 +110,11 @@ public class EditorialDAO {
 		int resultado=0;
 		
 		try {
-			consulta = con.prepareStatement("INSERT INTO editoriales (nombre,año)"
+			consulta = con.prepareStatement("INSERT INTO editoriales (nombre,anio)"
 					+ " VALUES (?,?) ");
 			
 			consulta.setString(1, editorial.getNombre());
-			consulta.setInt(2, editorial.getAño());
+			consulta.setInt(2, editorial.getAnio());
 			resultado=consulta.executeUpdate();
 
 		} catch (SQLException e) {
@@ -140,11 +140,11 @@ public class EditorialDAO {
 		
 		try {
 			consulta = con.prepareStatement("UPDATE `biblioteca`.`editoriales`\r\n"
-					+ "SET `nombre` = ?, `año` = ?\r\n"
+					+ "SET `nombre` = ?, `anio` = ?\r\n"
 					+ "WHERE `codEditorial` = ?;");
 			
 			consulta.setString(1, editorial.getNombre());
-			consulta.setInt(2, editorial.getAño());
+			consulta.setInt(2, editorial.getAnio());
 			consulta.setInt(3, editorial.getCodEditorial());
 			resultado=consulta.executeUpdate();
 			
@@ -166,7 +166,7 @@ public class EditorialDAO {
     }
 
 
-    public int eliminarEditorial(Editorial editorial) {
+    public int eliminarEditorial(int codEditorial) {
     	// Obtenemos una conexion a la base de datos.
 		Connection con = conexion.getConexion();
 		PreparedStatement consulta = null;
@@ -176,7 +176,7 @@ public class EditorialDAO {
 			consulta = con.prepareStatement("DELETE FROM `biblioteca`.`editoriales`\r\n"
 					+ "WHERE codEditorial = ?");
 			
-			consulta.setInt(1, editorial.getCodEditorial());
+			consulta.setInt(1, codEditorial);
 			resultado=consulta.executeUpdate();
 
 		} catch (SQLException e) {

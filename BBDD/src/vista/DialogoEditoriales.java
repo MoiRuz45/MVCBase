@@ -9,6 +9,8 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import net.miginfocom.swing.MigLayout;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import java.util.ArrayList;
 
@@ -52,7 +54,7 @@ public class DialogoEditoriales extends JDialog {
 					new Object[][] {
 					},
 					new String[] {
-						"C\u00F3digo Editorial", "Nombre", "A\u00F1o"
+						"C\u00F3digo Editorial", "Nombre", "Anio"
 					}
 				) {
 					Class[] columnTypes = new Class[] {
@@ -78,6 +80,15 @@ public class DialogoEditoriales extends JDialog {
 							llamarActualizar();
 						}
 					});
+					{
+						JButton btnEliminar = new JButton("Eliminar");
+						btnEliminar.addActionListener(new ActionListener() {
+							public void actionPerformed(ActionEvent e) {
+								llamarEliminar();
+							}
+						});
+						panel.add(btnEliminar);
+					}
 					panel.add(btnNewButton_1);
 					btnNewButton_1.setHorizontalAlignment(SwingConstants.RIGHT);
 				}
@@ -92,13 +103,28 @@ public class DialogoEditoriales extends JDialog {
 		}
 	}
 	
+	protected void llamarEliminar() {
+		int fila = table.getSelectedRow();
+		if(fila==-1) {
+			JOptionPane.showMessageDialog(this, "Debe seleccionar una editorial");
+		}else {
+			DefaultTableModel modelo = (DefaultTableModel) table.getModel();
+			int codEditorial = (int) modelo.getValueAt(fila, 0);
+			controlador.EliminarEditorial(codEditorial);
+		}
+	}
+
 	protected void llamarActualizar() {
 		int fila=table.getSelectedRow();
+		if (fila==-1) {
+			JOptionPane.showMessageDialog(this, 
+					"Debe seleccionar una editorial");
+		}else {
 		DefaultTableModel modelo = (DefaultTableModel) table.getModel();
 		int codEditorial = (int) modelo.getValueAt(fila, 0);
 		
 		controlador.mostrarActualizarEditorial(codEditorial);
-		
+		}
 	}
 
 	public void setListaEditoriales(ArrayList<Editorial> lista) {
@@ -106,7 +132,7 @@ public class DialogoEditoriales extends JDialog {
 		modelo.setRowCount(0);
 		for (Editorial editorial : lista) {
 			Object [] fila = {
-					editorial.getCodEditorial(),editorial.getNombre(),editorial.getAño()
+					editorial.getCodEditorial(),editorial.getNombre(),editorial.getAnio()
 			};
 			modelo.addRow(fila);
 		}

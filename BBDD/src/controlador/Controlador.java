@@ -89,4 +89,15 @@ public class Controlador {
 		}
 		mostrarEditoriales();
 	}
+
+	public void EliminarEditorial(int codEditorial) {
+		int res= editorialDAO.eliminarEditorial(codEditorial);
+		if(res==0) {
+			JOptionPane.showMessageDialog(NuevaEditorial, "Error.No se puede borrar editorial");
+		}else {
+			JOptionPane.showMessageDialog(NuevaEditorial, "Editorial elminada correctamente");
+			this.NuevaEditorial.setVisible(false);
+		}
+		mostrarEditoriales();
+	}
 }

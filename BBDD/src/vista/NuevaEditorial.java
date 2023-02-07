@@ -24,7 +24,7 @@ public class NuevaEditorial extends JFrame {
 
 	private final JPanel contentPanel = new JPanel();
 	private JTextField txtNombre;
-	private JTextField txtAño;
+	private JTextField txtAnio;
 	private Controlador controlador;
 	private Editorial editorial;
 
@@ -77,9 +77,9 @@ public class NuevaEditorial extends JFrame {
 			contentPanel.add(lblNewLabel_2, "cell 0 4,alignx right");
 		}
 		{
-			txtAño = new JTextField();
-			contentPanel.add(txtAño, "cell 1 4,growx");
-			txtAño.setColumns(10);
+			txtAnio = new JTextField();
+			contentPanel.add(txtAnio, "cell 1 4,growx");
+			txtAnio.setColumns(10);
 		}
 		{
 			JPanel buttonPane = new JPanel();
@@ -112,13 +112,13 @@ public class NuevaEditorial extends JFrame {
 	protected void insertarEditorial() {
 		try {
 			String nombre = txtNombre.getText();
-			int año = Integer.parseInt(txtAño.getText());
+			int anio = Integer.parseInt(txtAnio.getText());
 			
 			//Editorial ed = new Editorial(0,nombre,año);
 			Editorial ed = new Editorial();
 			
 			ed.setNombre(nombre);
-			ed.setAño(año);
+			ed.setAnio(anio);
 			if (this.editorial == null)
 				controlador.insertarEditorial(ed);
 			else {
@@ -144,10 +144,10 @@ public class NuevaEditorial extends JFrame {
 		editorial = e;
 		if (e!=null) {
 			txtNombre.setText(editorial.getNombre());
-			txtAño.setText(""+editorial.getAño());
+			txtAnio.setText(""+editorial.getAnio());
 		} else {
 			txtNombre.setText("");
-			txtAño.setText("");
+			txtAnio.setText("");
 		}
 		
 	}
